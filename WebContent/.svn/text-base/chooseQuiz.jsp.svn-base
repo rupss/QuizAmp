@@ -1,0 +1,60 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="stylesheets/display.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/controlBar.css" />
+
+<%@ page
+			import="Users.User, java.util.*, quiz.*, java.net.URL"%>
+			
+<title>View All Quizzes</title>
+</head>
+<body>
+
+<div class = "bodyclass">
+
+<jsp:include page="control-bar.jsp" />
+
+	
+	<div class = "header"> 
+		<h1> CHOOSE A QUIZ </h1>
+	</div>
+	
+	<div class = "backpanel">
+	
+	<div class = "data" >
+			<table align="center" cellpadding=10px >
+				<tr>
+					<th> NAME </th>
+					<th width = 20 > AUTHOR </th>
+					<th> DATE </th>
+				</tr>
+						
+			<%
+			java.text.SimpleDateFormat sdf = 
+				new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+			
+			ArrayList<Quiz> qzs = Quiz.viewAllQuizzes(); 
+			   for (Quiz q : qzs) {
+				out.println("<tr>");
+				String url = "QuizSummary.jsp?id=" + q.getQuizId(); 
+				out.println("<td><a href=\"" + url + "\">" + q.getName() + "</a></td>");
+				url = "UserProfile.jsp?username=" + q.getUsername();
+				out.println("<td><a href=\"" + url + "\">" + q.getUsername() + "</a></td>");
+				out.println("<td>" + sdf.format(new Date(q.getTimeCreated().getTime())) + "</td>");
+				out.println("</tr>");
+			   }
+			%>
+			
+			</table>
+		</div>
+	</div>
+	
+</div>
+		 
+
+</body>
+</html>

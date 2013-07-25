@@ -1,0 +1,11 @@
+Friend table: 
+	Possible values for status: 
+		true - means that friend1 and friend2 are actually friends
+		false - means that friend1 friend-requested friend2 and friend2 has not yet responded
+
+Messages table: 
+	Possible values for type: 
+		"note" - simple text note
+		"challenge" - quiz challenge
+		"friend request" - friend request
+

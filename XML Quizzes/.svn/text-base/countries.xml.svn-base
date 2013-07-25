@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<quiz random="false" one-page="true" immediate-correction="false" practice-mode="true">
+<title>Countries</title>
+<description>Country quiz!</description>
+<question type="multiple-answer"><query>What are the 3 biggest countries in North America, in order?</query><answer-list ordered="true"><answer>Canada</answer><answer>United States</answer><answer>Mexico</answer></answer-list></question>
+<question type="question-response"><query>Which is the best country?</query><answer-list><answer>'merica</answer></answer-list></question>
+<question type="multiple-answer"><query>What states are on the West Coast?</query><answer-list ordered="false"><answer>Alaska</answer><answer>Hawaii</answer><answer>California</answer><answer>Oregon</answer><answer>Washington</answer></answer-list></question>
+</quiz>

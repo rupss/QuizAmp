@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+.search {
+	clear: both;
+	margin-right: 179px;
+	text-align: right;
+}
+
+.search-input{
+    border-radius: 25px;
+    width: 150px;
+    border:gray;
+    border: 3px solid gray;
+    height:20px;
+    left: 25px;
+    position: relative;
+    margin-bottom: 15px; 
+    font-weight:bold;
+}
+
+#searchbutton{
+    border-radius:15px;
+    text-align: center;
+    vertical-align: center;
+    height: 25px;
+    color: white;
+    border: none;
+    background-color:gray; 
+    padding: 7px 20px 19px 20px;
+    margin: 0 auto;
+    position: relative;
+    left: 45px;
+    top: 8px;
+}
+
+#text {
+	margin-top:-3px;
+	
+}
+
+.buttonspan {
+	margin-top: 15px;
+}
+

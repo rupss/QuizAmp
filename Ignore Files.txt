@@ -1,0 +1,6 @@
+Ignore the following files:
+
+.settings
+.eclipse
+build
+MyDB.java (in database package)

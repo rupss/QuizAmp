@@ -1,0 +1,413 @@
+package Users;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Map;
+
+import org.junit.AfterClass;
+import org.junit.Test;
+
+import quiz.Quiz;
+import quiz.QuizTaken;
+import database.MyDB;
+
+public class UserTest {
+	
+	
+	User user = new User();
+	ArrayList<String> usernames = new ArrayList<String>();
+	
+
+	@AfterClass
+	public static void tearDownAfterClass() {
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("TRUNCATE TABLE Quiz;");
+			stmt.executeUpdate("TRUNCATE TABLE TookQuiz;");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testLogin() {
+		String username = "lennon";
+		String pass = "password";
+		
+		user.addUser(username, pass);
+		if (!usernames.contains(username)) usernames.add(username);
+		assertTrue(User.isValidLogin("lennon", "password"));
+		rollback();
+	}
+	
+	@Test
+	public void testInvalidLogin(){
+		String username = "lennon";
+		String pass = "password";
+		
+		user.addUser(username, pass);
+		if (!usernames.contains(username)) usernames.add(username);
+		//Test for invalid password
+		assertTrue(User.isValidLogin(username, "password"));
+		assertFalse(User.isValidLogin(username, "wrong password"));
+		assertFalse(User.isValidLogin(username, "")); // empty
+		assertFalse(User.isValidLogin(username, "78!")); // other chars
+		
+		//Test for invalid username with correct password
+		assertFalse(User.isValidLogin("lennonc", "password"));
+		assertFalse(User.isValidLogin("", "password")); //empty
+		assertFalse(User.isValidLogin("56!", "password")); // other chars
+		
+		
+		//Test for invalid username with incorrect password
+		assertFalse(User.isValidLogin("lennonc", "wrong password"));
+		rollback();
+	}
+	
+	@Test
+	public void testForAdminFlag(){
+		String username = "lennon";
+		String pass = "password";
+		
+		user.addUser(username, pass);
+		if (!usernames.contains(username)) usernames.add(username);
+		
+		assertFalse(user.isAdmin());
+		user.setAdmin(true);
+		
+		assertTrue(user.isAdmin());
+		user.setAdmin(false);
+		
+		assertFalse(user.isAdmin());
+		rollback();
+	}
+	
+	
+	@Test
+	public void testDuplicateUser(){
+		String username = "lennon";
+		String pass = "password";
+		
+		assertTrue(user.addUser(username, pass));
+		if (!usernames.contains(username)) usernames.add(username);
+		assertFalse(user.addUser(username, pass));
+		rollback();
+	}
+	
+	private void rollback(){
+		Connection con = MyDB.getConnection();
+		
+		try{
+			Statement stmnt = con.createStatement();
+			
+			for (int i = 0; i < usernames.size(); i++){
+				String strSQL = "DELETE FROM User WHERE username=" + "'" + usernames.get(i) + "'";
+				stmnt.executeUpdate(strSQL);
+			}
+			
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testGetChallenges() {
+		Connection conn = MyDB.getConnection(); 
+		User user = new User();
+		User.purgeFriendsTable(); 
+		User.purgeUsersTable(); 
+		User.purgeMessagesTable(); 
+		try {
+			Statement stmt = conn.createStatement();
+
+			java.util.Date dt = new java.util.Date();
+
+			java.text.SimpleDateFormat sdf = 
+					new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+			String currentTime = sdf.format(dt);
+			String query = "INSERT INTO Messages VALUES(\"kuda\", \"rupa\", \"challenge\", 1, NULL, " + "'" + currentTime + "'" + ", false)";
+			stmt.executeUpdate(query); 
+			query = "INSERT INTO Messages VALUES(\"ryan\", \"rupa\", \"challenge\", 2, NULL, " + "'" + currentTime + "'" + ", false)";
+			stmt.executeUpdate(query); 
+			query = "INSERT INTO Messages VALUES(\"ryan\", \"mailyn\", \"challenge\", 3, NULL, " + "'" + currentTime + "'" + ", false)";
+		}
+		catch(SQLException e) {
+			e.printStackTrace(); 
+		}
+
+		user.addUser("rupa", "password"); 
+		ArrayList<Challenge> challenges = user.getChallenges(); 
+		assertTrue(challenges.size() == 2); 
+		boolean kuda = false; 
+		boolean ryan = false; 
+		for (Challenge c : challenges) {
+			if (c.getFromUsername().equals("kuda") && c.getQuizID() == 1) {
+				kuda = true; 
+			}
+			if (c.getFromUsername().equals("ryan") && c.getQuizID() == 2) {
+				ryan = true; 
+			}
+		}
+		assertTrue(ryan); 
+		assertTrue(kuda); 
+
+	}
+	
+	
+	@Test
+	public void testSendChallenge() {
+		User user = new User();
+		User.purgeFriendsTable(); 
+		User.purgeUsersTable(); 
+		User.purgeMessagesTable(); 
+		user.addUser("rupa", "password"); 
+		
+		User kuda = new User(); 
+		kuda.addUser("kuda", "password"); 
+		
+		user.sendChallenge("kuda", Integer.toString(12)); //send challenge from rupa to kuda
+		
+		ArrayList<Challenge> challenges = kuda.getChallenges(); 
+		assertEquals(1, challenges.size()); 
+	}
+
+	
+	@Test
+	public void testgetQuizCreated() {
+		User.purgeFriendsTable();
+		User.purgeUsersTable();
+		User.purgeMessagesTable();
+		User user = new User();
+		user.addUser("mickey", "mouse");
+		User user2 = new User();
+		user2.addUser("minnie", "girlmouse");
+		
+		ArrayList<Quiz> empty = user.getQuizCreated();
+		assertTrue(empty.size() == 0);
+		ArrayList<Quiz> empty2 = user2.getQuizCreated();
+		assertTrue(empty2.size() == 0);
+		
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("insert into Quiz (username, timeCreated, name, description, randomOrder, multiplePages, immediateCorrection, practiceMode) values ('mickey', NULL, 'Disney', 'All the songs!', false, false, false, false);");
+			stmt.executeUpdate("insert into Quiz (username, timeCreated, name, description, randomOrder, multiplePages, immediateCorrection, practiceMode) values ('mickey', NULL, 'Mice', 'Scientific facts about mice', false, false, false, false);");
+			stmt.executeUpdate("insert into Quiz (username, timeCreated, name, description, randomOrder, multiplePages, immediateCorrection, practiceMode) values ('minnie', NULL, 'Mice Vacations', 'All the places mice like to go', false, false, false, false);");
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+		
+		ArrayList<Quiz> qc = user.getQuizCreated();
+		assertTrue(qc.size() == 2);
+		for ( Quiz q : qc) {
+			System.out.println("From testGetQuizCreated, User created the quiz: " + q.getName() + ", " + q.getDescription());
+		}
+		
+		qc = user2.getQuizCreated();
+		assertTrue(qc.size() == 1);
+		for (Quiz q : qc) {
+			System.out.println("From testGetQuizCreated, User2 created the quiz: " + q.getName() + ", " + q.getDescription());
+		}
+	
+
+		
+	}
+	
+	@Test
+	public void testReadMessages() {
+		Connection conn = MyDB.getConnection(); 
+		User user = new User();
+		User.purgeFriendsTable(); 
+		User.purgeUsersTable(); 
+		User.purgeMessagesTable(); 
+		
+		String time1 = "2013-03-02 13:51:03"; 
+		String time2 = "2012-03-02 13:51:03"; 
+		
+		java.text.SimpleDateFormat sdf = 
+				new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		java.util.Date date1 = null; 
+		java.util.Date date2 = null;  
+		try {
+			date1 = sdf.parse(time1); 
+			date2 = sdf.parse(time2); 
+		}
+		catch (Exception e) {
+			e.printStackTrace(); 
+		}
+		
+		try {
+			Statement stmt = conn.createStatement();
+
+			String query = "INSERT INTO Messages values(\"ryan\", \"rupa\", \"challenge\", 12, NULL, " + "'" + time1 + "', false)";
+			String query2 = "INSERT INTO Messages values(\"mailyn\", \"rupa\", \"challenge\", 12, NULL, " + "'" + time2 + "', false)";
+			
+			stmt.executeUpdate(query); 
+			stmt.executeUpdate(query2); 
+			
+			user.addUser("rupa", "password"); 
+			user.readMessage("ryan", date1); 
+			user.readMessage("mailyn", date2); 
+			
+			query = "SELECT isRead FROM Messages where time=" + "'" + time1 + "' and fromUsername = \"ryan\" and toUsername = \"rupa\""; 
+			ResultSet rs = stmt.executeQuery(query); 
+			rs.next(); 
+			boolean ryan = rs.getBoolean("isRead"); 
+			assertEquals(ryan, true); 
+			query = "SELECT isRead FROM Messages where time=" + "'" + time2 + "'and fromUsername = \"mailyn\" and toUsername = \"rupa\""; 
+			rs = stmt.executeQuery(query); 
+			rs.next(); 
+			boolean mailyn = rs.getBoolean("isRead"); 
+			assertEquals(mailyn, true); 
+			
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+		
+		User user2 = new User(); 
+		user2.addUser("ryan", "password"); 
+		user2.readMessage("rupa", date1); 
+		
+		try {
+			Statement stmt = conn.createStatement();
+
+			String query = "INSERT INTO Messages values(\"rupa\", \"ryan\", \"challenge\", 12, NULL, " + "'" + time1 + "', false)";
+			String query2 = "INSERT INTO Messages values(\"mailyn\", \"ryan\", \"challenge\", 12, NULL, " + "'" + time2 + "', false)";
+			
+			stmt.executeUpdate(query); 
+			stmt.executeUpdate(query2); 
+			
+			user2.readMessage("rupa", date1); 
+			user2.readMessage("mailyn", date2); 
+			
+			query = "SELECT isRead FROM Messages where time=" + "'" + time1 + "'"; 
+			ResultSet rs = stmt.executeQuery(query); 
+			rs.next(); 
+			boolean rupa = rs.getBoolean("isRead"); 
+			assertEquals(rupa, true); 
+			query = "SELECT isRead FROM Messages where time=" + "'" + time2 + "'"; 
+			rs = stmt.executeQuery(query); 
+			rs.next(); 
+			boolean mailyn = rs.getBoolean("isRead"); 
+			assertEquals(mailyn, true); 
+			
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+		
+	}
+	
+	
+	@Test
+	public void testGetQuizHistory() {
+		//System.out.println("In TEST GET QUIZ HISTORY"); 
+		Connection conn = MyDB.getConnection(); 
+		User user = new User();
+		User.purgeFriendsTable(); 
+		User.purgeUsersTable(); 
+		User.purgeMessagesTable(); 
+		String time1 = "2013-03-02 13:51:03"; 
+		String time2 = "2012-03-02 13:51:03"; 
+		String time3 = "2011-03-02 13:51:03"; 
+		
+		java.text.SimpleDateFormat sdf = 
+				new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		java.util.Date date1 = null; 
+		java.util.Date date2 = null;  
+		java.util.Date date3 = null;  
+		try {
+			date1 = sdf.parse(time1); 
+			date2 = sdf.parse(time2); 
+			date3 = sdf.parse(time3); 
+		}
+		catch (Exception e) {
+			e.printStackTrace(); 
+		}
+		
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "INSERT INTO TookQuiz values(12, \"rupa\", 14.0, '" + time1 + "', 60, true)";
+			String query2 = "INSERT INTO TookQuiz values(10, \"rupa\", 14.0, '" + time2 + "', 60, false)";
+			String query3 = "INSERT INTO TookQuiz values(8, \"rupa\", 14.0, '" + time3 + "', 60, false)";
+			stmt.executeUpdate(query); 
+			stmt.executeUpdate(query2); 
+			stmt.executeUpdate(query3); 
+
+		}
+		catch(SQLException e) {
+			e.printStackTrace(); 
+		}
+		
+		user.addUser("rupa", "password"); 
+		ArrayList<QuizTaken> rupaHistory = user.getQuizHistory(); 
+		assertEquals(2, rupaHistory.size()); 
+		
+		boolean ten = false; 
+		boolean eight = false; 
+		
+		for (QuizTaken t : rupaHistory) {
+			String time = t.getTimeTaken().toString();
+			if (t.getQuizId() == 10 && t.getTimeTaken().compareTo(date2) == 0) {
+				ten = true; 
+			}
+			if (t.getQuizId() == 8 && t.getTimeTaken().compareTo(date3) == 0) {
+				eight = true; 
+			}
+			
+		}
+		
+		assertEquals(true, ten); 
+		assertEquals(true, eight); 
+		
+		User user2 = new User(); 
+		user2.addUser("mailyn", "pass"); 
+		ArrayList<QuizTaken> mailynHistory = user2.getQuizHistory(); 
+		assertEquals(0, mailynHistory.size()); 
+		
+		try {
+			Statement stmt = conn.createStatement();
+			String query = "INSERT INTO TookQuiz values(12, \"mailyn\", 14.0, '" + time1 + "', 60, true)";
+			String query2 = "INSERT INTO TookQuiz values(10, \"mailyn\", 14.0, '" + time2 + "', 60, true)";
+			String query3 = "INSERT INTO TookQuiz values(8, \"mailyn\", 14.0, '" + time3 + "', 60, false)";
+			stmt.executeUpdate(query); 
+			stmt.executeUpdate(query2); 
+			stmt.executeUpdate(query3);
+
+		}
+		catch(SQLException e) {
+			e.printStackTrace(); 
+		}
+		
+		mailynHistory = user2.getQuizHistory(); 
+		
+		assertEquals(1, mailynHistory.size()); 
+		
+	}
+	
+	@Test
+	public void getFriends() {
+		User user = new User(); 
+		user.addUser("rupa", "pass"); 
+		ArrayList<String> friends = user.getFriends(); 
+		assertEquals(2, friends.size()) ;
+	}
+	
+
+	
+
+
+}

@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+body {
+     color: #FFE3E3;
+     font-family: helvetica, sans-serif;
+     font-weight: bold;
+}
+
+#title {
+     background-color: #CE3F37;
+     color: white;
+     padding-bottom: 10px;
+     padding-top: 10px;
+     margin-left: 0px;
+     margin-right: 0px;
+     text-align: center;
+     width: 1000px;
+}
+
+#title h1, #title h2 {
+	margin: 10px;
+}
+
+#title input {
+     font-size: 28px;
+     min-height: 35px;
+     min-width: 900px;
+}
+
+#title textarea {
+     font-family: inherit;
+     margin-top: 15px;
+     min-height: 70px;
+     min-width: 900px;
+}
+
+h2.box {
+     display: block;
+     margin: 10px auto;
+     text-align: center;
+     width: 500px;
+}
+
+#questions ol {
+     display: inline;
+     list-style: none outside none;
+}
+
+.last-float {
+     clear: both;
+}
+
+#questions li, #quiz-flags p {
+     overflow: auto;
+}
+
+#questions li {
+     float: left;
+     height: 300px;
+     width: 457px;
+}
+
+#questions li.multiple-pages {
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#questions li div {
+     margin: 5px;
+}
+
+#question-type {
+     display: block;
+     font-size: 16px;
+     margin: 0pt auto;
+}
+
+#quiz-flags {
+     clear: both;
+     margin-top: 20px;
+}
+
+#quiz-flags p {
+     display: block;
+     margin: 0px auto;
+     width: 500px;
+}
+
+select[disabled] {
+     color: #AAAAAA;
+}
+
+#submit-p {
+     margin-top: -25px;
+}
+
+#submit-button {
+     color: inherit;
+     font-family: inherit;
+     font-weight: inherit;
+     display: block;
+     font-size: 48px;
+     margin: 0px auto;
+     padding: 10px;
+     cursor: pointer;
+}
+
+.view-quiz .question {
+     text-align: center;
+}
+
+.question img {
+     max-height: 210px;
+     max-width: 400px;
+}
+
+.view-quiz input {
+     margin-top: 10px;
+}
+
+#amp-img  { /* TODO: get rid of gray corners */
+	float: left;
+	max-width: 200px;
+	margin-left: 150px;
+	margin-bottom: 15px;
+	position: absolute;
+}
+
+.nav-button {
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	cursor: pointer;
+}
+
+#prev-button {
+	float: left;
+}
+
+#next-button {
+	float: right;
+}
+
+#ajax-status {
+	text-align: center;
+	font-size: 24px;
+	margin: 0px;
+}
+
+#timer {
+	width: 150px;
+	margin: 10px auto;
+	text-align: center;
+}
+
+a:link {color: white; text-decoration: underline}
+a:visited {color: #BEBEBE; text-decoration: underline}

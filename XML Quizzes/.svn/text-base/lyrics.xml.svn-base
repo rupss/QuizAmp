@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<quiz random="false" one-page="true" immediate-correction="false" practice-mode="true">
+<title>Song Lyrics</title>
+<description>Cool song lyrics</description>
+<question type="fill-in-blank"><pre>Boy, you're gonna</pre><blank></blank><post>that weight</post><answer-list><answer>carry</answer></answer-list></question>
+<question type="fill-in-blank"><pre>Dear</pre><blank></blank><post>won't you come out to play?</post><answer-list><answer>Prudence</answer><answer>prudence</answer></answer-list></question>
+</quiz>

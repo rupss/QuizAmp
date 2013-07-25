@@ -1,0 +1,75 @@
+@CHARSET "UTF-8";
+
+body{
+    font: 18px helvetica, sans-serif;
+    color:white;
+}
+.login-box{
+     position:relative;
+     width:700px;
+     height:300px;
+     top: 50px;
+     margin: 0 auto;
+     background-color: #af110d;
+     border-radius: 30px;
+}
+
+#login-form{
+    position: relative;
+    top: 45px;
+    text-align: center;
+}
+
+#title-text{
+    position: relative;
+    margin: 0 auto;
+    font-size: 20px;
+    top: 15px;
+    text-align: center;
+}
+
+#login{
+    border-radius:15px;
+    color: gray;
+    border: none;
+    background-color:white; 
+    padding: 10px 35px 10px 35px;
+    margin: 0 auto;
+    position: relative;
+    top:-15px;
+    
+}
+
+.logindiv{
+    text-align: center;
+}
+
+.login-input{
+    border-radius: 25px;
+    width: 250px;
+    border:none;
+    height:25px;
+    left: 50px;
+    position: relative;
+    margin-bottom: 15px; 
+    font-weight:bold;
+}
+
+.front-image{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    top:40px;
+    width: 450px;
+}
+
+#password_confirm{
+    left: 60px;
+}
+
+fieldset{
+    border: none;
+}
+
+a:link {color: #FFFFFF; text-decoration: none}
+a:visited {color: #BEBEBE; text-decoration: none}

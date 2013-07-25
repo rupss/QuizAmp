@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<quiz random="true" one-page="true" immediate-correction="false" practice-mode="false">
+<title>Test XML Escaping</title>
+<description>Testing, testing, 1 2 3. </description>
+<question type="picture-response"><image-location>http://9to5mac.files.wordpress.com/2012/09/apple-iphone-5-announcement-analysis.jpeg?w=591&amp;h=600</image-location><answer-list><answer>iPhone</answer><answer>iphone</answer></answer-list></question>
+<question type="question-response"><query>Where did Sam &amp; Frodo go?</query><answer-list><answer>Mordor</answer></answer-list></question>
+<question type="blank"><pre>I want a PB</pre><blank></blank><post>J sandwich.</post><answer-list><answer>&amp;</answer><answer>and</answer></answer-list></question>
+<question type="multiple choice"><query>5 &gt; 4</query><option answer="answer">True</option><option>False</option></question>
+<question type="multiple choice"><query>5 &lt; 4</query><option answer="answer">False</option><option>True</option></question>
+</quiz>

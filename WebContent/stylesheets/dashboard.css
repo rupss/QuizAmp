@@ -1,0 +1,258 @@
+/*
+CSS for the user's dashboard page.
+*/
+@CHARSET "UTF-8";
+
+.panel {
+	background-color: white;
+	border-style: solid;
+	border-color: #616161;
+	border-width: thick;
+	border-radius: 10px 10px 10px 10px;
+	padding: 10px;
+	margin: 0px;
+	width: 340px;
+	height: 200px;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+
+.panel.wide-panel {
+	width: 1107px;
+}
+
+.QPanel {
+	border-style: solid;
+	border-color: #616161;
+	border-width: thick;
+	border-radius: 10px 10px 10px 10px;
+	padding: 10px;
+	width: 340px;
+	height: 200px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+.randomPanel {
+	border-style: solid;
+	border-color: #616161;
+	border-width: thick;
+	border-radius: 10px 10px 10px 10px;
+	padding: 10px;
+	width: 340px;
+	height: 200px;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+
+.wrapper {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+div {
+	display: block;
+}
+
+.row {
+	margin-top: 10px;
+	width: 1190px;
+}
+
+#historyQuizzesTaken {
+	float: left;
+	/*position:relative;
+	top:-1640px;*/
+}
+
+#historyQuizzesCreated {
+	float: left;
+	margin-left: 10px;
+	/*position:relative; 
+	top:-1870px;
+	left:410px;*/
+}
+
+#achievements {
+	float: left;
+	margin-left: 10px;
+	/*position:relative; 
+	left:820px;
+	top:-2100px;*/
+}
+
+#random { 
+	float: left;
+}
+
+#friends { 
+	float: left;
+}
+
+#announcements {
+	float: left;
+	width: 1107px;
+}
+
+#popularQuizzes { /*
+	position:relative; 
+	left:820px;
+	top:-240px;*/
+	float: left;
+	margin-left: 10px;
+}
+
+#recentlyTakenQuizzes {
+	float: left;
+}
+
+#recentlyCreatedQuizzes {
+	float: left;
+	margin-left: 10px;
+}
+
+#challenges {
+	float: left;
+	margin-left: 10px;
+}
+
+#friendActivity {
+	float: left;
+}
+
+#friendRequests {
+	float: left;
+	margin-left: 10px;
+}
+
+#friends {
+	float: left;
+	margin-left: 10px;
+}
+
+#notes {
+	float: left;
+	width: 1107px;
+}
+
+.header {
+	text-align: center;
+	color: #616161;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+body {
+	color: #616161;
+	font-family: arial;
+}
+
+#QDiv { 
+	float: left;
+	margin-left: 10px;
+}
+
+#QImage {
+	width: auto;
+	height: 220px;
+	margin-left: 60px;
+	margin-top: -10px;
+}
+
+#AImage {
+	width: 32px;
+}
+
+#SmallAImage {
+	width: 15px;
+}
+
+.seeall {
+	background-color: #972321;
+	text-align: center;
+	font-size: 13px;
+	width: 60px;
+	height: 22px;
+	border-radius: 10px 10px 10px 10px;
+	border: 2px solid white;
+	padding: 5px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin: 0 auto;
+	margin-top: -14px;
+}
+
+.seealllink {
+	display: block;
+	margin: 0px auto;
+	margin-top: 3px;
+	vertical-align: center;
+}
+
+
+.tip {
+    position: absolute; 
+	top: 0px; 
+	left: 0px; 
+	width: 150px; 
+	height: 40px;
+	background-color: #972321;
+	border-radius: 10px 10px 10px 10px;
+    border: 1px solid white;
+    font-size: smaller;
+	display: none;
+	text-align: center;
+	color: white;
+}
+
+.hasTip {
+    text-decoration: underline;
+	color: #ff0000;
+}
+
+.tipTitle {
+	font-weight: bold;
+}
+
+td,th {
+  text-align: center;
+  padding: 2px;
+}
+
+td.quizName {
+	
+}
+
+.read {
+	color:#adadad;
+}
+
+a:link.seealllink {color: #FFFFFF; text-decoration: none}
+a:visited.seealllink {color: #BEBEBE; text-decoration: none}
+
+a:link {color: #616161; text-decoration: underline}
+a:visited {color: #616161; text-decoration: underline}
+
+a:link.read {color: #adadad; text-decoration: underline}
+a:visited.read {color: #adadad; text-decoration: underline}
+
+.last-float {
+	clear: both;
+}
+
+/* CSS for admin page */
+
+#admin {
+	text-align: center;
+}
+
+#announcement-form textarea {
+	resize: vertical;
+}
+
+

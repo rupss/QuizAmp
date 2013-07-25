@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<quiz random="false" one-page="false" immediate-correction="true" practice-mode="false" seconds-per-question="0">
+<title>Flamenco Quiz</title>
+<description>A quiz about Flamenco!</description>
+<question type="multiple-answer"><query>Who are two veteran musicians?</query><answer-list ordered="false"><answer>Diego</answer><answer>Nate</answer></answer-list></question>
+<question type="multiple-answer"><query>Who are two veteran dancers?</query><answer-list ordered="false"><answer>Javier</answer><answer>Rose</answer></answer-list></question>
+<question type="multiple-answer"><query>Who danced the 2nd copla in Flamenco Inflamado?</query><answer-list ordered="false"><answer>Rupa</answer><answer>Ryan</answer></answer-list></question>
+</quiz>
