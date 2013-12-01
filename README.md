@@ -4,7 +4,7 @@ QuizAmp
 Final project for CS108 (Object Oriented Systems Design). 
 Teammates: Lennon Chimbumu, Mailyn Fidler, Ryan Globus, Jujhaar Singh
 
-Assignment handout: www.stanford.edu/class/cs108/handouts122/34QuizWebsite.pdf‎
+Assignment handout: http://www.stanford.edu/class/cs108/handouts122/34QuizWebsite.pdf
 
 SPECIAL INSTRUCTIONS:
 Please load project in Chrome. Although we used jQuery and cross-compatible HTML/CSS, we have only tested in Chrome.
